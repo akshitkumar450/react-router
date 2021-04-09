@@ -1,17 +1,29 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 class StreamCreate extends React.Component {
+    // showing error when user clicks input and clicks out without putting data in inputs
+    renderError(meta) {
+        if (meta.touched && meta.error) {
+            return (
+                // error message will not show now bcz semantic ui has display none for classes as error
+                <div className='ui error message '>
+                    <div className='header'>
+                        {meta.error}
+                    </div>
+                </div>
+            )
+        }
+    }
 
-    renderInput(formProps) {
+    renderInput = (formProps) => {
         // console.log(formProps);
         // console.log(formProps.meta);  // for showing error
         return (
             <div className='field'>
                 <labe>{formProps.label}</labe>
-                <input {...formProps.input} />
-                <div>
-                    {formProps.meta.error}
-                </div>
+                <input {...formProps.input} autoComplete='off' />
+
+                {this.renderError(formProps.meta)}
             </div>
         )
     }
@@ -25,7 +37,7 @@ class StreamCreate extends React.Component {
     render() {
         // console.log(this.props);
         return (
-            <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='ui form'>
+            <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='ui form '>
                 <Field
                     name='title'
                     label='enter title'
