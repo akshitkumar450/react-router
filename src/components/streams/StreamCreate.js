@@ -36,8 +36,9 @@ class StreamCreate extends React.Component {
 
     render() {
         // console.log(this.props);
+        // if we add className of error ,,then semantic ui will show all the error messages 
         return (
-            <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='ui form '>
+            <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='ui form error '>
                 <Field
                     name='title'
                     label='enter title'
