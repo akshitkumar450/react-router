@@ -4,10 +4,14 @@ class StreamCreate extends React.Component {
 
     renderInput(formProps) {
         // console.log(formProps);
+        // console.log(formProps.meta);  // for showing error
         return (
             <div className='field'>
                 <labe>{formProps.label}</labe>
                 <input {...formProps.input} />
+                <div>
+                    {formProps.meta.error}
+                </div>
             </div>
         )
     }
@@ -35,7 +39,21 @@ class StreamCreate extends React.Component {
         )
     }
 }
+// validation
+// validation will occur when form in initially rendered or any interaction with form
+const validate = (formValues) => {
+    const errors = {}
+    // error field name should be same as name in Field 
+    if (!formValues.title) {
+        errors.title = 'you must enter a title'
+    }
+    if (!formValues.description) {
+        errors.description = 'you must enter a description'
+    }
+    return errors
+}
 
 export default reduxForm({
-    form: 'streamCreate'  // key should be form and  value can be any thing (string)
+    form: 'streamCreate',
+    validate: validate  // key should be form and  value can be any thing (string)
 })(StreamCreate)
