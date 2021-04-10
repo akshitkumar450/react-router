@@ -15,6 +15,10 @@ export const signOut = () => {
 
 export const createStream = (formValues) => {
     return async (dispatch) => {
-        axios.post('http://localhost:3001/streams', formValues)
+        const response = await axios.post('http://localhost:3001/streams', formValues)
+        dispatch({
+            type: 'CREATE_STREAM',
+            payload: response.data
+        })
     }
 }
