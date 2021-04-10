@@ -12,6 +12,7 @@ const createStreamReducer = (state = {}, action) => {
         case 'DELET_STREAM':
             return _.omit(state, action.payload)
         case 'FETCH_STREAMS':
+            // mapkeys take an array and returns a object
             // mapkeys convert an array of objects to a object
             // mapkeys returns an object with all the key as id and value as values of id's
             return { ...state, ..._.mapKeys(action.payload, 'id') }
