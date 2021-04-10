@@ -14,8 +14,12 @@ export const signOut = () => {
 }
 
 export const createStream = (formValues) => {
-    return async (dispatch) => {
-        const response = await axios.post('http://localhost:3001/streams', formValues)
+    return async (dispatch, getState) => {
+        // getState is used to get info from redux store
+        // for connecting streams with user
+        // user must be signed to get userId
+        const { userId } = getState().auth
+        const response = await axios.post('http://localhost:3001/streams', { ...formValues, userId })
         dispatch({
             type: 'CREATE_STREAM',
             payload: response.data
