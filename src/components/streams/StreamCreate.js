@@ -1,5 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import { createStream } from '../../actions'
 class StreamCreate extends React.Component {
     // showing error when user clicks input and clicks out without putting data in inputs
     // touched property is used to detect whether input element is touched or not
@@ -31,9 +33,11 @@ class StreamCreate extends React.Component {
     }
 
     // will run when the form submit and the data of Fields will be available here
-    onSubmit(formValues) {
+    onSubmit = (formValues) => {
         // e.preventDefault() // no need with redux form ,done automatically with handleSubmit()
         console.log(formValues);
+        // for creating new streams
+        this.props.createStream(formValues)
     }
 
     render() {
@@ -72,7 +76,9 @@ const validate = (formValues) => {
 }
 
 // reduxForm fn is same as like connect method ,which is use to get data from store to component
-export default reduxForm({
+const formWrapped = reduxForm({
     form: 'streamCreate',
     validate: validate  // key should be form and  value can be any thing (string)
 })(StreamCreate)
+
+export default connect(null, { createStream: createStream })(formWrapped)
