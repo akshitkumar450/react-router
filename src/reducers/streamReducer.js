@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export const createStreamReducer = (state = {}, action) => {
+const createStreamReducer = (state = {}, action) => {
     switch (action.type) {
         case 'FETCH_STREAM':
             // key interpolation syntax
@@ -11,7 +11,12 @@ export const createStreamReducer = (state = {}, action) => {
             return { ...state, [action.payload.id]: action.payload }
         case 'DELET_STREAM':
             return _.omit(state, action.payload)
+        case 'FETCH_STREAMS':
+            // mapkeys convert an array of objects to a object
+            // mapkeys returns an object with all the key as id and value as values of id's
+            return { ...state, ..._.mapKeys(action.payload, 'id') }
         default:
             return state
     }
 }
+export default createStreamReducer
