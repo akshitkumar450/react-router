@@ -20,8 +20,8 @@ class StreamEdit extends React.Component {
     }
 
     onSubmit = (formValues) => {
-        // this.props.editStream(this.props.match.params.id, formValues)
-        console.log(formValues);
+        // console.log(formValues);
+        this.props.editStream(this.props.match.params.id, formValues)
     }
 
     render() {
@@ -41,7 +41,13 @@ class StreamEdit extends React.Component {
                     // this.props.stream is object having title and description as key which is same as name property in Field component
                     // when the Field component is shown it will look at the name field 
                     // and if the name field has some initialValues of the name property passed from parent component and they will be shown
-                    initialValues={this.props.stream}
+                    // initialValues={this.props.stream}  //dont pass the full stream object as it contains id and userId also
+                    initialValues={
+                        {
+                            title: this.props.stream.title,
+                            description: this.props.stream.description
+                        }
+                    }
                 />
             </div>
         )
