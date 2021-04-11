@@ -33,7 +33,6 @@ class StreamList extends Component {
                             {stream.description}
                         </div>
                     </div>
-
                 </div>
             )
         })
@@ -55,6 +54,7 @@ const mapStateToProps = (state) => {
     // console.log(Object.values(state.streams));
     return {
         // Object.values takes an object as arg and put in an array
+        //  converted into array for easy mapping through it and showing the list
         streams: Object.values(state.streams),
         currentUserId: state.auth.userId
     }

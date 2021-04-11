@@ -35,7 +35,7 @@ class StreamCreate extends React.Component {
     // will run when the form submit and the data of Fields will be available here
     onSubmit = (formValues) => {
         // e.preventDefault() // no need with redux form ,done automatically with handleSubmit()
-        console.log(formValues);
+        // console.log(formValues);
         // for creating new streams
         this.props.createStream(formValues)
     }

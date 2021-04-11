@@ -1,5 +1,6 @@
 import _ from 'lodash'
 
+// we have used object as initial state rather than array bcz of easy operations on objects
 const createStreamReducer = (state = {}, action) => {
     switch (action.type) {
         case 'FETCH_STREAM':
