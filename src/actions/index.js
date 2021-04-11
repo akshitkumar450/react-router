@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import history from '../history'
 export const signIn = (userId) => {
     return {
         type: 'SIGN_IN',
@@ -24,6 +24,8 @@ export const createStream = (formValues) => {
             type: 'CREATE_STREAM',
             payload: response.data
         })
+        // to redirect to home page after stream is created
+        history.push('/')
     }
 }
 
