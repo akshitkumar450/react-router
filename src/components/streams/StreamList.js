@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchStreams } from '../../actions'
+import { Link } from 'react-router-dom'
 class StreamList extends Component {
 
     componentDidMount() {
@@ -37,6 +38,16 @@ class StreamList extends Component {
             )
         })
     }
+    // navigate to create stream page is user is signed in
+    renderCreateBtn = () => {
+        if (this.props.isSignedIn) {
+            return (
+                <div style={{ textAlign: 'right' }}>
+                    <Link to='/streams/new' className='ui button primary'>create stream</Link>
+                </div>
+            )
+        }
+    }
     render() {
         // console.log(this.props.streams);
         return (
@@ -45,6 +56,7 @@ class StreamList extends Component {
                 <div className='ui celled list'>
                     {this.renderList()}
                 </div>
+                {this.renderCreateBtn()}
             </div>
         )
     }
@@ -56,7 +68,11 @@ const mapStateToProps = (state) => {
         // Object.values takes an object as arg and put in an array
         //  converted into array for easy mapping through it and showing the list
         streams: Object.values(state.streams),
-        currentUserId: state.auth.userId
+        // if we are having currentUserId -> user is signed in else null value
+        currentUserId: state.auth.userId,
+        // we can use currentUserId also we can use isSignedIn property to know signin or signout
+        isSignedIn: state.auth.isSignedIn
+
     }
 }
 
