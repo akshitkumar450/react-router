@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchStream } from '../../actions'
+import { formValues } from 'redux-form'
+import { fetchStream, editStream } from '../../actions'
+import StreamForm from './StreamForm'
 class StreamEdit extends React.Component {
     // when the Route component of react-router renders this component 
     // react-router-dom  passes many props to rendered component
@@ -16,6 +18,12 @@ class StreamEdit extends React.Component {
     componentDidMount() {
         this.props.fetchStream(this.props.match.params.id)
     }
+
+    onSubmit = (formValues) => {
+        // this.props.editStream(this.props.match.params.id, formValues)
+        console.log(formValues);
+    }
+
     render() {
         // console.log(this.props.stream);
         if (!this.props.stream) {
@@ -24,7 +32,17 @@ class StreamEdit extends React.Component {
 
         return (
             <div>
-                {this.props.stream.title}
+                {/*this.props.stream.title*/}
+                <h3>Edit a stream</h3>
+                <StreamForm
+                    onSubmit={this.onSubmit}
+                    // for showing initial values in the form
+                    // key values should be same as the name value in Field in redux form
+                    // this.props.stream is object having title and description as key which is same as name property in Field component
+                    // when the Field component is shown it will look at the name field 
+                    // and if the name field has some initialValues of the name property passed from parent component and they will be shown
+                    initialValues={this.props.stream}
+                />
             </div>
         )
     }
@@ -38,4 +56,7 @@ const mapStateToProps = (state, props) => {
         stream: state.streams[props.match.params.id]
     }
 }
-export default connect(mapStateToProps, { fetchStream: fetchStream })(StreamEdit)
+export default connect(mapStateToProps, {
+    fetchStream: fetchStream,
+    editStream: editStream
+})(StreamEdit)

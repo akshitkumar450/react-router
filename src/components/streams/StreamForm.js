@@ -37,7 +37,7 @@ class StreamForm extends React.Component {
         // console.log(formValues);
         // for creating new streams
 
-        // onSubmit is passed as a props from createStream as of now
+        // onSubmit is passed as a props from createStream and editStream and they both require formValues 
         this.props.onSubmit(formValues)
     }
 
