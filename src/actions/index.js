@@ -50,7 +50,9 @@ export const fetchStream = (id) => {
 
 export const editStream = (id, formValues) => {
     return async (dispatch) => {
-        const response = await axios.put(`http://localhost:3001/streams/${id}`, formValues)
+        // with put we updates all record will remove values which are not present in formValues
+        // with patch we update only update property present in formValues and rest will be remain same
+        const response = await axios.patch(`http://localhost:3001/streams/${id}`, formValues)
         dispatch({
             type: 'EDIT_STREAM',
             payload: response.data

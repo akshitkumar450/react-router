@@ -21,6 +21,10 @@ class StreamEdit extends React.Component {
 
     onSubmit = (formValues) => {
         // console.log(formValues);
+        // formValues has only title and description
+        // with put request we update all the records
+        //when we submit data it will no longer have userId ,
+        //so after editing ,userId will not be present so edit and delete btn will no longer be present
         this.props.editStream(this.props.match.params.id, formValues)
     }
 
