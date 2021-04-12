@@ -66,7 +66,10 @@ export const deleteStream = (id) => {
         await axios.delete(`http://localhost:3001/streams/${id}`)
         dispatch({
             type: 'DELETE_STREAM',
+            // when action creater will run it will dispatch an action object which will omit/delete the payload which is and id,
             payload: id
         })
+        history.push('/')
+
     }
 }

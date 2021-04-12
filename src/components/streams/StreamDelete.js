@@ -1,26 +1,64 @@
 import React from 'react'
 import Modal from '../Modal'
 import history from '../../history'
+import { connect } from 'react-redux'
+import { fetchStream, deleteStream } from '../../actions'
+import { Link } from 'react-router-dom'
 
-const StreamDelete = () => {
-    const actions = (
-        <React.Fragment>
-            <button className='ui negative button'>delete</button>
-            <button className='ui button'>cancel</button>
-        </React.Fragment>
+class StreamDelete extends React.Component {
+    componentDidMount() {
+        this.props.fetchStream(this.props.match.params.id)
+    }
 
-    )
-    return (
-        <div>
-            StreamDelete
-            <Modal
-                title='Delete header'
-                content='are your sure want to delete this stream?'
-                actions={actions}
-                onDismiss={() => history.push('/')}
-            />
-        </div>
-    )
+    renderActions = () => {
+        return (
+            <React.Fragment>
+                <button
+                    onClick={() => this.props.deleteStream(this.props.match.params.id)}
+                    className='ui negative button'>
+                    delete
+                </button>
+
+                <Link to='/' className='ui button'>cancel</Link>
+            </React.Fragment>
+        )
+    }
+    // when the component first renders stream will not be present 
+    // bcz first this component renders and than only our componentDidMount() will runs
+    // after that only stream will be available
+    renderContent = () => {
+        if (!this.props.stream) {
+            return 'are you sure want to delete this stream?'
+        }
+        return `are you sure want to delete this stream with title: ${this.props.stream.title}`
+    }
+
+    render() {
+        // console.log(this.props.match.params.id);
+        // console.log(this.props.stream.title);
+        // console.log(this.props.stream.description);
+
+        return (
+            <div>
+                <Modal
+                    title='Delete header'
+                    content={this.renderContent()}
+                    actions={this.renderActions()}
+                    onDismiss={() => history.push('/')}
+                />
+            </div>
+        )
+    }
 }
 
-export default StreamDelete
+// getting stream fo current id
+const mapStateToProps = (state, props) => {
+    return {
+        stream: state.streams[props.match.params.id]
+    }
+}
+
+export default connect(mapStateToProps, {
+    fetchStream: fetchStream,
+    deleteStream: deleteStream
+})(StreamDelete)
