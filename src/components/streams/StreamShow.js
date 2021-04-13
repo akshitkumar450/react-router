@@ -14,21 +14,42 @@ class StreamShow extends React.Component {
 
     componentDidMount() {
         this.props.fetchStream(this.props.match.params.id)
+        this.buildPlayer()
     }
 
+    componentDidUpdate() {
+        this.buildPlayer()
+    }
+    // to stop straming video and detach itself from video element
+    componentWillUnmount() {
+        this.player.destroy()
+    }
+    buildPlayer() {
+        if (this.player || !this.props.stream) {
+            return
+        }
+        this.player = flv.createPlayer({
+            type: 'flv',
+            url: `http://localhost:8000/live/${this.props.match.params.id}.flv`
+        })
+        this.player.attachMediaElement(this.videoRef.current)
+        this.player.load()
+    }
 
     render() {
         // console.log(this.props.stream);
         // when the component will run first stream will not be available bcz componentDidmount fn runs after the component is rendered
+
+        //    when our component first renders our stream will not be there so it will just return and reference of video element will not be there
         if (!this.props.stream) {
             return <div>loading..</div>
         }
         return (
             <div>
                 <video ref={this.videoRef} style={{ width: '100%' }} controls={true} />
-                {this.props.stream.title}
-                {this.props.stream.description}
-            </div>
+                <h1>{this.props.stream.title}</h1>
+                <h5>{this.props.stream.description}</h5>
+            </div >
         )
     }
 }
