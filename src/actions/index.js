@@ -19,7 +19,7 @@ export const createStream = (formValues) => {
         // for connecting streams with user
         // user must be signed to get userId
         const { userId } = getState().auth
-        const response = await axios.post('http://localhost:3001/streams', { ...formValues, userId })
+        const response = await axios.post('http://localhost:3001/streams', { ...formValues, userId: userId })
         dispatch({
             type: 'CREATE_STREAM',
             payload: response.data

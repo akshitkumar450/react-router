@@ -18,13 +18,17 @@ class GoogleAuth extends Component {
                 // this.setState({ isSignedIn: this.auth.isSignedIn.get() })
 
                 // update the auth state in redux store
+                // here we want to use the same functionality of auth change ,so we have manually passed value
                 this.onAuthChange(this.auth.isSignedIn.get())
                 // this will run whenever user authentication status is changed
+                // authchange fn will automatically get value true or false depending on the login or logout
                 this.auth.isSignedIn.listen(this.onAuthChange)
             })
         })
     }
-
+    // this fn will automatically get value true or false depending on the login or logout
+    // when login -true
+    // when logout -false
     onAuthChange = (isSignedIn) => {
         // any time our auth state changes we are calling the action creater
         if (isSignedIn) {
